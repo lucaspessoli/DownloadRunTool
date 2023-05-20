@@ -3,6 +3,7 @@ using System.Threading;
 using System.Net;
 using System.Linq.Expressions;
 using System.Diagnostics;
+using System.Collections;
 
 partial class Program
 {
@@ -16,9 +17,12 @@ partial class Program
 
     public static string ArchiveFormatter(String type)
     {
-        char charToBeRemoved = '.';
-        int index = type.IndexOf(charToBeRemoved);
-        type = type.Remove(index, 1); //1 is the quantity of characters to be replaced
+        if (type.Contains("."))
+        {
+            char charToBeRemoved = '.';
+            int index = type.IndexOf(charToBeRemoved);
+            type = type.Remove(index, 1); //1 is the quantity of characters to be replaced
+        }
         return type;
     }
 
@@ -32,15 +36,11 @@ partial class Program
 
         if (!link.Contains("."))
         {
-            Console.WriteLine("did u forgot the .?");
+            Console.WriteLine("did u forgot the .? quiting...");
             Environment.Exit(1);
         }
 
-        //Formatting Archive
-        if (archiveType.Contains("."))
-        {
-            archiveType = ArchiveFormatter(archiveType);
-        }
+        archiveType = ArchiveFormatter(archiveType);
     }
 
     public static void NameValidation(ref String name)
@@ -68,17 +68,18 @@ partial class Program
             }
         }
     }
-    public static void DownloadMenu() {
-        Console.WriteLine("insert your download link: ");
+    public static void DownloadMenu()
+    {
+        Console.WriteLine("Insert your download link: ");
         String link = Console.ReadLine();
 
-        Console.WriteLine("name your archive: (do NOT use these characters: < > : ' / \\ | ? * or any other special chars");
+        Console.WriteLine("Name your archive: (do NOT use these characters: < > : ' / \\ | ? * or any other special chars");
         String archiveName = Console.ReadLine();
 
-        Console.WriteLine("insert the archive type. Example: (txt,exe,zip... etc)");
+        Console.WriteLine("Insert the archive type. Example: (txt,exe,zip... etc)");
         String archiveType = Console.ReadLine();
 
-        Console.WriteLine("insert your directory (empty to C:\\)");
+        Console.WriteLine("Insert your directory (empty to C:\\)");
         String directory = Console.ReadLine();
         if (directory == "")
         {
@@ -92,14 +93,60 @@ partial class Program
 
     public static void ExecuteMenu()
     {
-        Console.WriteLine("Execute menu...");
-        ProcessStartInfo process = new ProcessStartInfo();
+        List<String> typeList = new List<String>()
+        {
+            ".txt",
+            ".exe",
+            ".zip",
+            ".jpg",
+            ".png",
+            ".gif"
+        };
+        List<String> execNames = new List<String>()
+        {
+            "notepad.exe",
+            "",
+            "C:\\Program Files\\WinRAR\\WinRAR.exe",
+            "mspaint.exe",
+            "mspaint.exe",
+            "mspaint.exe"
+        };
+
+        Console.WriteLine("Insert your file directory: (ex: C:\\)");
+        String fileDir = Console.ReadLine();
+
+        Console.WriteLine("Insert your file name:");
+        string fileName = Console.ReadLine();
+
+        Console.WriteLine("Insert your file sufix: (ex: zip exe  etc...");
+        Console.WriteLine("Obs: use 'bt' for .bat");
+        String sufixFile = Console.ReadLine();
+
+
+        sufixFile = ArchiveFormatter(sufixFile);
+        sufixFile = "." + sufixFile;
+        foreach (String list in typeList)
+        {
+            int i = typeList.IndexOf(list);
+            if (sufixFile.Contains(list))
+            {
+                if(sufixFile == ".exe")
+                {
+                    Process.Start(fileDir + fileName + sufixFile);
+                }
+                else
+                {
+                    Process.Start(execNames[i], fileDir + fileName + sufixFile);
+                }
+            }
+        }
     }
 
     static void Main()
     {
         bool runMenu = true;
-        while (runMenu){
+        while (runMenu)
+        {
             Console.Clear();
             Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
             Console.WriteLine("[2] - Execute file -?");
@@ -113,12 +160,12 @@ partial class Program
                     ExecuteMenu();
                     break;
                 default:
-                    Console.WriteLine("Opção inesperada!");
+                    Console.WriteLine("Unexpected option!");
                     break;
             }
-            Console.WriteLine("return to menu? (y/n)");
+            Console.WriteLine("Return to menu? (y/n)");
             String answer = Console.ReadLine();
-            if(answer == "N" || answer == "n")
+            if (answer == "N" || answer == "n")
             {
                 runMenu = false;
             }
