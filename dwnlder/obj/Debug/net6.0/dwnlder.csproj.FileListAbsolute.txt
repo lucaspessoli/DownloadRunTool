@@ -1,0 +1,15 @@
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.csproj.AssemblyReference.cache
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.AssemblyInfoInputs.cache
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.AssemblyInfo.cs
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.csproj.CoreCompileInputs.cache
+C:\Users\lucas\source\repos\dwnlder\dwnlder\bin\Debug\net6.0\dwnlder.exe
+C:\Users\lucas\source\repos\dwnlder\dwnlder\bin\Debug\net6.0\dwnlder.deps.json
+C:\Users\lucas\source\repos\dwnlder\dwnlder\bin\Debug\net6.0\dwnlder.runtimeconfig.json
+C:\Users\lucas\source\repos\dwnlder\dwnlder\bin\Debug\net6.0\dwnlder.dll
+C:\Users\lucas\source\repos\dwnlder\dwnlder\bin\Debug\net6.0\dwnlder.pdb
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.dll
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\refint\dwnlder.dll
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.pdb
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\dwnlder.genruntimeconfig.cache
+C:\Users\lucas\source\repos\dwnlder\dwnlder\obj\Debug\net6.0\ref\dwnlder.dll
