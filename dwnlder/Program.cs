@@ -50,8 +50,27 @@ partial class Program
         }
     }
 
-    static void Main()
+    public static void DownloadFileLocal(String link, String fileDirectory)
     {
+        using (WebClient client = new WebClient())
+        {
+            try
+            {
+                Console.WriteLine("Downloading...");
+                client.DownloadFile(link, fileDirectory);
+                Console.WriteLine("Sucess! File downloaded and stored at: " + fileDirectory);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("error downloading your file, error: " + e.Message);
+                Console.WriteLine("Possible Reasons: no adm privileges found, try open the software as a administrator, your download host is offline or invalid directory");
+                Console.WriteLine("Exiting in 5 seconds...");
+                Thread.Sleep(5000);
+                Environment.Exit(1);
+            }
+        }
+    }
+    public static void DownloadMenu() {
         Console.WriteLine("insert your download link: ");
         String link = Console.ReadLine();
 
@@ -69,25 +88,43 @@ partial class Program
         }
 
         LinkAndArchiveTypeValidation(ref link, ref archiveType);
-
         string fileDirectory = directory + archiveName + "." + archiveType;
+        DownloadFileLocal(link, fileDirectory);
+    }
 
-        using (WebClient client = new WebClient())
-        {
-            try
+    public static void ExecuteMenu()
+    {
+        Console.WriteLine("Execute menu...");
+    }
+
+    static void Main()
+    {
+        bool runMenu = true;
+        while (runMenu){
+            Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
+            Console.WriteLine("[2] - Execute file -?");
+            String menuAnswer = Console.ReadLine();
+            switch (menuAnswer)
             {
-                Console.WriteLine("Downloading...");
-                client.DownloadFile(link, fileDirectory);
-            }catch(Exception e)
+                case "1":
+                    DownloadMenu();
+                    break;
+                case "2":
+                    ExecuteMenu();
+                    break;
+                default:
+                    Console.WriteLine("Opção inesperada!");
+                    break;
+            }
+            Console.WriteLine("return to menu? (Y/n)");
+            String answer = Console.ReadLine();
+            if(answer != "" ||  answer != "Y" || answer != "y")
             {
-                Console.WriteLine("error downloading your file, error: " + e.Message);
-                Console.WriteLine("Possible Reasons: no adm privileges found, try open the software as a administrator, your download host is offline or invalid directory");
-                Console.WriteLine("Exiting in 5 seconds...");
-                Thread.Sleep(5000);
-                Environment.Exit(1);
+                runMenu = false;
             }
         }
-        Console.WriteLine("Thanks for using Downloader Tool! Exiting in 5 seconds...");
+
+        Console.WriteLine("Thanks for using the tool! Exiting in 5 seconds...");
         Thread.Sleep(5000);
 
         Console.WriteLine("-------------");
