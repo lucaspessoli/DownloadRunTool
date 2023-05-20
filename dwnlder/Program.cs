@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Net;
 using System.Linq.Expressions;
+using System.Diagnostics;
 
 partial class Program
 {
@@ -64,9 +65,6 @@ partial class Program
             {
                 Console.WriteLine("error downloading your file, error: " + e.Message);
                 Console.WriteLine("Possible Reasons: no adm privileges found, try open the software as a administrator, your download host is offline or invalid directory");
-                Console.WriteLine("Exiting in 5 seconds...");
-                Thread.Sleep(5000);
-                Environment.Exit(1);
             }
         }
     }
@@ -95,12 +93,14 @@ partial class Program
     public static void ExecuteMenu()
     {
         Console.WriteLine("Execute menu...");
+        ProcessStartInfo process = new ProcessStartInfo();
     }
 
     static void Main()
     {
         bool runMenu = true;
         while (runMenu){
+            Console.Clear();
             Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
             Console.WriteLine("[2] - Execute file -?");
             String menuAnswer = Console.ReadLine();
@@ -116,9 +116,9 @@ partial class Program
                     Console.WriteLine("Opção inesperada!");
                     break;
             }
-            Console.WriteLine("return to menu? (Y/n)");
+            Console.WriteLine("return to menu? (y/n)");
             String answer = Console.ReadLine();
-            if(answer != "" ||  answer != "Y" || answer != "y")
+            if(answer == "N" || answer == "n")
             {
                 runMenu = false;
             }
