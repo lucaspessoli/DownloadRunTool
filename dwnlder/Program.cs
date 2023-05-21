@@ -4,6 +4,7 @@ using System.Net;
 using System.Linq.Expressions;
 using System.Diagnostics;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 partial class Program
 {
@@ -114,6 +115,7 @@ partial class Program
 
         Console.WriteLine("Insert your file directory: (ex: C:\\)");
         String fileDir = Console.ReadLine();
+        fileDir = fileDir + "\\";
 
         Console.WriteLine("Insert your file name:");
         string fileName = Console.ReadLine();
@@ -142,14 +144,45 @@ partial class Program
         }
     }
 
+    public static void FileReaderFrom(string folder)
+    {
+        try
+        {
+            string[] tempVectorDocuments = System.IO.Directory.GetFiles(folder);
+            List<String> documents = new List<String>();
+            if (tempVectorDocuments.Length != 0)
+            {
+                foreach (String item in tempVectorDocuments)
+                {
+                    documents.Add(item);
+                }
+                foreach (string item in documents)
+                {
+                    int i = documents.IndexOf(item);
+                    Console.WriteLine(i + "item:" + item);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No files at your folder!");
+            }
+        }catch(Exception e)
+        {
+            Console.WriteLine("folder not found");
+        }
+    }
+
     static void Main()
     {
         bool runMenu = true;
         while (runMenu)
         {
             Console.Clear();
+            Console.WriteLine("highly recommended running this software as a administrator!");
+            Console.WriteLine("github.com/lucaspessoli\n\n");
             Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
-            Console.WriteLine("[2] - Execute file -?");
+            Console.WriteLine("[2] - Execute file -? run a personal file of your choice");
+            Console.WriteLine("[3] - File Explorer-? show files contained in a specific folder");
             String menuAnswer = Console.ReadLine();
             switch (menuAnswer)
             {
@@ -158,6 +191,9 @@ partial class Program
                     break;
                 case "2":
                     ExecuteMenu();
+                    break;
+                case "3":
+                    FileReaderFrom("E:\\");
                     break;
                 default:
                     Console.WriteLine("Unexpected option!");
