@@ -18,9 +18,9 @@ partial class Program
         "notepad.exe",
         "",
         "C:\\Program Files\\WinRAR\\WinRAR.exe",
-        "mspaint.exe",
-        "mspaint.exe",
-        "mspaint.exe"
+        "msPaint.exe",
+        "msPaint.exe",
+        "msPaint.exe"
     };
 
     public static string LinkHttpsFormatter(String insertedLink)
@@ -113,16 +113,13 @@ partial class Program
         String fileDir = Console.ReadLine();
         fileDir = fileDir + "\\";
 
-        Console.WriteLine("Insert your file name:");
-        string fileName = Console.ReadLine();
-
         Console.WriteLine("Insert your file sufix: (ex: zip exe  etc...");
-        Console.WriteLine("Obs: use 'bt' for .bat");
         String sufixFile = Console.ReadLine();
-
 
         sufixFile = ArchiveFormatter(sufixFile);
         sufixFile = "." + sufixFile;
+        string fileName = FileReaderAtFolder(fileDir, sufixFile);
+
         foreach (String list in typeList)
         {
             int i = typeList.IndexOf(list);
@@ -130,22 +127,23 @@ partial class Program
             {
                 if(sufixFile == ".exe")
                 {
-                    Process.Start(fileDir + fileName + sufixFile);
+                    Process.Start(fileName);
                 }
                 else
                 {
-                    Process.Start(execNames[i], fileDir + fileName + sufixFile);
+                    Process.Start(execNames[i],fileName);
                 }
             }
         }
     }
 
-    public static string FileReaderAtFolder(string folder)
+    public static string FileReaderAtFolder(string folder, string archiveType)
     {
         string fileName = "";
         try
         {
-            string[] tempVectorDocuments = System.IO.Directory.GetFiles(folder, "*.exe");
+            archiveType = "*" + archiveType;
+            string[] tempVectorDocuments = System.IO.Directory.GetFiles(folder, archiveType);
             List<String> documents = new List<String>();
             if (tempVectorDocuments.Length != 0)
             {
@@ -156,9 +154,9 @@ partial class Program
                 foreach (string item in documents)
                 {
                     int i = documents.IndexOf(item);
-                    Console.WriteLine(i + "item:" + item);
+                    Console.WriteLine("["+i+"] File:" + item);
                 }
-                Console.WriteLine("type the file number that u want to run");
+                Console.WriteLine("Insert the file number that u want to run");
                 int fileNumber = int.Parse(Console.ReadLine());
                 fileName = documents[fileNumber];
             }
@@ -183,7 +181,6 @@ partial class Program
             Console.WriteLine("github.com/lucaspessoli\n\n");
             Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
             Console.WriteLine("[2] - Execute file -? run a personal file of your choice");
-            Console.WriteLine("[3] - File Explorer-? show files contained in a specific folder");
             String menuAnswer = Console.ReadLine();
             switch (menuAnswer)
             {
@@ -192,9 +189,6 @@ partial class Program
                     break;
                 case "2":
                     ExecuteMenu();
-                    break;
-                case "3":
-                    Console.WriteLine(FileReaderAtFolder("C:\\"));
                     break;
                 default:
                     Console.WriteLine("Unexpected option!");
