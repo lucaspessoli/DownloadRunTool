@@ -1,13 +1,27 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Threading;
-using System.Net;
-using System.Linq.Expressions;
+﻿using System.Net;
 using System.Diagnostics;
-using System.Collections;
-using System.ComponentModel.DataAnnotations;
+
 
 partial class Program
 {
+    public static List<String> typeList = new List<String>()
+    {
+        ".txt",
+        ".exe",
+        ".zip",
+        ".jpg",
+        ".png",
+        ".gif"
+    };
+    public static List<String> execNames = new List<String>()
+    {
+        "notepad.exe",
+        "",
+        "C:\\Program Files\\WinRAR\\WinRAR.exe",
+        "mspaint.exe",
+        "mspaint.exe",
+        "mspaint.exe"
+    };
 
     public static string LinkHttpsFormatter(String insertedLink)
     {
@@ -94,24 +108,6 @@ partial class Program
 
     public static void ExecuteMenu()
     {
-        List<String> typeList = new List<String>()
-        {
-            ".txt",
-            ".exe",
-            ".zip",
-            ".jpg",
-            ".png",
-            ".gif"
-        };
-        List<String> execNames = new List<String>()
-        {
-            "notepad.exe",
-            "",
-            "C:\\Program Files\\WinRAR\\WinRAR.exe",
-            "mspaint.exe",
-            "mspaint.exe",
-            "mspaint.exe"
-        };
 
         Console.WriteLine("Insert your file directory: (ex: C:\\)");
         String fileDir = Console.ReadLine();
