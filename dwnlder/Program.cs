@@ -144,11 +144,12 @@ partial class Program
         }
     }
 
-    public static void FileReaderFrom(string folder)
+    public static string FileReaderAtFolder(string folder)
     {
+        string fileName = "";
         try
         {
-            string[] tempVectorDocuments = System.IO.Directory.GetFiles(folder);
+            string[] tempVectorDocuments = System.IO.Directory.GetFiles(folder, "*.exe");
             List<String> documents = new List<String>();
             if (tempVectorDocuments.Length != 0)
             {
@@ -161,6 +162,9 @@ partial class Program
                     int i = documents.IndexOf(item);
                     Console.WriteLine(i + "item:" + item);
                 }
+                Console.WriteLine("type the file number that u want to run");
+                int fileNumber = int.Parse(Console.ReadLine());
+                fileName = documents[fileNumber];
             }
             else
             {
@@ -168,8 +172,9 @@ partial class Program
             }
         }catch(Exception e)
         {
-            Console.WriteLine("folder not found");
+            Console.WriteLine(e);
         }
+        return fileName;
     }
 
     static void Main()
@@ -193,7 +198,7 @@ partial class Program
                     ExecuteMenu();
                     break;
                 case "3":
-                    FileReaderFrom("E:\\");
+                    Console.WriteLine(FileReaderAtFolder("C:\\"));
                     break;
                 default:
                     Console.WriteLine("Unexpected option!");
