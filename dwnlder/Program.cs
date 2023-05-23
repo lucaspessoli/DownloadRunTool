@@ -54,9 +54,9 @@ partial class Program
         if (!link.Contains("."))
         {
             Console.WriteLine("did u forgot the .? quiting...");
+            LogRegister(". expected at link", true);
             Environment.Exit(1);
         }
-
         archiveType = ArchiveFormatter(archiveType);
     }
 
@@ -91,21 +91,21 @@ partial class Program
     {
         Console.WriteLine("Insert your download link: ");
         String link = Console.ReadLine();
-
-        Console.WriteLine("Name your archive: (do NOT use these characters: < > : ' / \\ | ? * or any other special chars");
-        String archiveName = Console.ReadLine();
-
         Console.WriteLine("Insert the archive type. Example: (txt,exe,zip... etc)");
         String archiveType = Console.ReadLine();
 
+        LinkAndArchiveTypeValidation(ref link, ref archiveType);
+
+        Console.WriteLine("Name your archive: (do NOT use these characters: < > : ' / \\ | ? * or any other special chars");
+        String archiveName = Console.ReadLine();
         Console.WriteLine("Insert your directory (empty to C:\\)");
         String directory = Console.ReadLine();
+
         if (directory == "")
         {
             directory = "C:\\";
         }
 
-        LinkAndArchiveTypeValidation(ref link, ref archiveType);
         string fileDirectory = directory + archiveName + "." + archiveType;
         DownloadFileLocal(link, fileDirectory);
     }
@@ -144,7 +144,7 @@ partial class Program
                     }
                 }catch(Exception e)
                 {
-                    LogRegister("Erro: " + e, true);
+                    LogRegister("Error: " + e, true);
                 }
 
             }
