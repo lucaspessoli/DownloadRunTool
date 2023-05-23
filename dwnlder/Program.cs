@@ -1,5 +1,7 @@
 ﻿using System.Net;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 
 partial class Program
@@ -106,9 +108,10 @@ partial class Program
         DownloadFileLocal(link, fileDirectory);
     }
 
+    
+
     public static void ExecuteMenu()
     {
-
         Console.WriteLine("Insert your file directory: (ex: C:\\)");
         String fileDir = Console.ReadLine();
         fileDir = fileDir + "\\";
@@ -125,16 +128,34 @@ partial class Program
             int i = typeList.IndexOf(list);
             if (sufixFile.Contains(list))
             {
-                if(sufixFile == ".exe")
+                try
                 {
-                    Process.Start(fileName);
-                }
-                else
+                    if (sufixFile == ".exe")
+                    {
+                        Process.Start(fileName);
+                        LogRegister("Arquivo aberto: " + fileName, false);
+                    }
+                    else
+                    {
+                        Process.Start(execNames[i], fileName);
+                        LogRegister("Arquivo aberto: " + fileName, false);
+                    }
+                }catch(Exception e)
                 {
-                    Process.Start(execNames[i],fileName);
+                    LogRegister("Erro: " + e, true);
                 }
+
             }
         }
+    }
+
+    public static string getData()
+    {
+        DateTime dateObj = DateTime.Now;
+        String dateNow = dateObj.ToString("dd/MM/yyy HH:mm");
+        dateNow = ("[" + dateNow + "] - ");
+
+        return dateNow;
     }
 
     public static string FileReaderAtFolder(string folder, string archiveType)
@@ -169,6 +190,26 @@ partial class Program
             Console.WriteLine(e);
         }
         return fileName;
+    }
+
+    public static void LogRegister(string log, bool isError)
+    {
+        if (isError)
+        {
+            string path = "C:\\logsError.txt";
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.Write(getData() + "Error: " + log);
+            }
+        }
+        else
+        {
+            string path = "C:\\logs.txt";
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                sw.WriteLine(getData() + log);
+            }
+        }
     }
 
     static void Main()
