@@ -212,25 +212,91 @@ partial class Program
         }
     }
 
-    public static void LogReader(string filePath)
+    public static string getData(string filePath)
     {
+        string contentData = "";
         if (File.Exists(filePath))
         {
             using (StreamReader sr = new StreamReader(filePath))
             {
-                string contentData = sr.ReadToEnd();
-                Console.WriteLine(contentData);
+                contentData = sr.ReadToEnd();
             }
         }
         else
         {
             Console.WriteLine("path wasn't found!");
         }
+        return contentData;
+    }
+
+    public static void ShowTutorial()
+    {
+        Console.Clear();
+        Console.WriteLine("Welcome to tutorial.");
+        Thread.Sleep(400);
+        bool runTutorial = true;
+        string tutAnswer = "";
+        while (runTutorial)
+        {
+            Console.WriteLine("which tutorial do u want?\n[1] - Downloader\n[2] - File Runner\n[3] - Exit");
+            string answer = Console.ReadLine();
+            switch (answer)
+            {
+                case "1":
+                    Console.Clear();
+                    Console.WriteLine("1. To start off, the your download adress link");
+                    Thread.Sleep(1500);
+                    Console.WriteLine("2. Insert your archiveType, like exe, zip, txt... etc");
+                    Thread.Sleep(1500);
+                    Console.WriteLine("3. Finally insert the directory that will store your file, like: C:\\myFolder and your download would start");
+                    Thread.Sleep(1500);
+                    Console.WriteLine("\nDo you want to continue tutorial? (y/n)");
+                    tutAnswer = Console.ReadLine().ToLower();
+                    if(tutAnswer == "n")
+                    {
+                        runTutorial = false;
+                    }
+                    break;
+                case "2":
+                    Console.Clear();
+                    Console.WriteLine("1. To start off. Insert your directory that contains your file. Like: C:\\folderThatContainMyFiles");
+                    Thread.Sleep(400);
+                    Console.WriteLine("2. Finally insert your archiveType, like exe, zip, txt... etc and select your file to open");
+                    Console.WriteLine("\nDo you want to continue tutorial? (y/n)");
+                    tutAnswer = Console.ReadLine().ToLower();
+                    if (tutAnswer == "n")
+                    {
+                        runTutorial = false;
+                    }
+                    break;
+                case "3":
+                    runTutorial = false;
+                    break;
+            }
+        }
     }
 
     static void Main()
     {
-        bool runMenu = true;
+        bool runMenu;
+        if (getData("C:\\util.txt").Contains("version: 1.19"))
+        {
+            runMenu = true;
+            if(getData("C:\\util.txt").Contains("firstRun: true"))
+            {
+                Console.WriteLine("Seems that is your first time here. Do you want a tutorial? (y/n)");
+                string answer = Console.ReadLine().ToLower();
+                if(answer.Equals("y"))
+                {
+                    ShowTutorial();
+                }
+            }
+        }
+        else
+        {
+            runMenu = false;
+            Console.WriteLine("OUTDATED TOOL VERSION, QUITING...");
+        }
         while (runMenu)
         {
             Console.Clear();
@@ -238,6 +304,7 @@ partial class Program
             Console.WriteLine("github.com/lucaspessoli\n\n");
             Console.WriteLine("[1] - Download Tool -? download a file with personal name,file type etc");
             Console.WriteLine("[2] - Execute file -? run a personal file of your choice");
+            Console.WriteLine("[3] - Tutorial");
             String menuAnswer = Console.ReadLine();
             switch (menuAnswer)
             {
@@ -247,13 +314,16 @@ partial class Program
                 case "2":
                     ExecuteMenu();
                     break;
+                case "3":
+                    ShowTutorial();
+                    break;
                 default:
                     Console.WriteLine("Unexpected option!");
                     break;
             }
             Console.WriteLine("Return to menu? (y/n)");
-            String answer = Console.ReadLine();
-            if (answer == "N" || answer == "n")
+            String answer = Console.ReadLine().ToLower();
+            if (answer == "n")
             {
                 runMenu = false;
             }
