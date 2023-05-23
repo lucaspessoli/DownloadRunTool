@@ -77,11 +77,13 @@ partial class Program
                 Console.WriteLine("Downloading...");
                 client.DownloadFile(link, fileDirectory);
                 Console.WriteLine("Sucess! File downloaded and stored at: " + fileDirectory);
+                LogRegister("File downloaded at: " + fileDirectory, false);
             }
             catch (Exception e)
             {
                 Console.WriteLine("error downloading your file, error: " + e.Message);
                 Console.WriteLine("Possible Reasons: no adm privileges found, try open the software as a administrator, your download host is offline or invalid directory");
+                LogRegister(e.Message, true);
             }
         }
     }
@@ -149,7 +151,7 @@ partial class Program
         }
     }
 
-    public static string getData()
+    public static string getDate()
     {
         DateTime dateObj = DateTime.Now;
         String dateNow = dateObj.ToString("dd/MM/yyy HH:mm");
@@ -199,7 +201,7 @@ partial class Program
             string path = "C:\\logsError.txt";
             using (StreamWriter sw = new StreamWriter(path, true))
             {
-                sw.WriteLine(getData() + "Error: " + log);
+                sw.WriteLine(getDate() + "Error: " + log);
             }
         }
         else
@@ -207,7 +209,7 @@ partial class Program
             string path = "C:\\logs.txt";
             using (StreamWriter sw = new StreamWriter(path, true))
             {
-                sw.WriteLine(getData() + log);
+                sw.WriteLine(getDate() + log);
             }
         }
     }
