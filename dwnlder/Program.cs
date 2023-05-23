@@ -197,15 +197,15 @@ partial class Program
         if (isError)
         {
             string path = "C:\\logsError.txt";
-            using (StreamWriter sw = new StreamWriter(path))
+            using (StreamWriter sw = new StreamWriter(path, true))
             {
-                sw.Write(getData() + "Error: " + log);
+                sw.WriteLine(getData() + "Error: " + log);
             }
         }
         else
         {
             string path = "C:\\logs.txt";
-            using (StreamWriter sw = new StreamWriter(path))
+            using (StreamWriter sw = new StreamWriter(path, true))
             {
                 sw.WriteLine(getData() + log);
             }
