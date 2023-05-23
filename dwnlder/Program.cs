@@ -212,6 +212,22 @@ partial class Program
         }
     }
 
+    public static void LogReader(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                string contentData = sr.ReadToEnd();
+                Console.WriteLine(contentData);
+            }
+        }
+        else
+        {
+            Console.WriteLine("path wasn't found!");
+        }
+    }
+
     static void Main()
     {
         bool runMenu = true;
